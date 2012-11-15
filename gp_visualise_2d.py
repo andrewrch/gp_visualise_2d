@@ -31,7 +31,7 @@ def main():
   args = parser.parse_args()
 
   # Sample values
-  points = np.array([np.linspace(args.x[0], args.x[1], num=args.s)]).T
+  points = np.linspace(args.x[0], args.x[1], num=args.s)
   U, V = np.meshgrid(points, points)
   x = np.array([U.flatten(1), V.flatten(1)])
   n = x.shape[1]
@@ -43,8 +43,7 @@ def main():
   # Build a covariance matrix using x values and the covariance function
   for i in range(n):
     for j in range(n):
-      # Stupid amount of hacking required to get numpy working properly :(
-      c[i, j] = k(np.array([x[:, i]]).T, np.array([x[:, j]]).T)
+      c[i, j] = k(x[:, i], x[:, j])
 
   # Now we randomly sample from the distribution made by the covariance matrix
   u = np.random.randn(n, 1)
